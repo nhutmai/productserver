@@ -64,7 +64,7 @@ app.post("/login", (req, res) => {
       res.status(500).json(err);
     });
 });
-app.get("/vin", (req, res) => {
+app.get("/", (req, res) => {
   res.json("da chay thnah cong");
 });
 
