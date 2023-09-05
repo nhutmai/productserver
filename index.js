@@ -6,7 +6,7 @@ const accountmodel = require("./accountmodel");
 var jwt = require("jsonwebtoken");
 
 const app = express();
-const port = 4000;
+const port = process.env.port || 8080;
 app.use(cors());
 
 //midleway bodyparser
@@ -52,7 +52,7 @@ app.post("/login", (req, res) => {
     .then((data) => {
       if (data) {
         const token = jwt.sign({ userId: data._id }, "nhut", {
-          expiresIn: "1h",
+          expiresIn: "3h",
         });
         return res.json({ token });
       } else {
@@ -64,4 +64,6 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.listen(port, () => {});
+app.listen(port, () => {
+  console.log(port);
+});
