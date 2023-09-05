@@ -7,6 +7,7 @@ var jwt = require("jsonwebtoken");
 
 const app = express();
 const port = process.env.port || 8080;
+app.use(express.json({ extended: false }));
 app.use(cors());
 
 //midleway bodyparser
