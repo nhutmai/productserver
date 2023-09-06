@@ -46,16 +46,15 @@ app.post("/account", checklogin, (req, res) => {
 
 //checking login
 app.post("/login", (req, res) => {
-  const { name, pass } = req.body;
-  console.log(name);
+  const { username, password } = req.body;
   accountmodel
-    .findOne({ name: name, pass: pass })
+    .findOne({ name: username, pass: password })
     .then((data) => {
       if (data) {
         const token = jwt.sign({ userId: data._id }, "nhut", {
           expiresIn: "3h",
         });
-        return res.json({ token });
+        return res.json({ token: token });
       } else {
         res.status(401).json({ message: "Tài khoản không tồn tại" });
       }
@@ -64,6 +63,8 @@ app.post("/login", (req, res) => {
       res.status(500).json(err);
     });
 });
+
+//test
 app.get("/", (req, res) => {
   res.json("da chay thnah cong");
 });
