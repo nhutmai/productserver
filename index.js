@@ -6,14 +6,10 @@ const accountmodel = require("./accountmodel");
 var jwt = require("jsonwebtoken");
 
 const app = express();
+app.use(cors());
 const port = process.env.port || 8080;
+
 app.use(express.json({ extended: false }));
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
 
 //midleway bodyparser
 app.use(bodyParser.urlencoded({ extended: false }));
