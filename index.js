@@ -14,20 +14,36 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//kiểm tra token
+const isTokenValid = (token) => {
+  try {
+    jwt.verify(token, "nhut");
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 //check login fuction
 const checklogin = (req, res, next) => {
-  var decoded = jwt.verify(req.body.token, "nhut");
-  accountmodel
-    .findById(decoded.userId)
-    .then((data) => {
-      if (data) {
-        res.data = data;
-        next();
-      } else {
-        res.json("vui lòng đăng nhập");
-      }
-    })
-    .catch((err) => console.log("lỗi xác thực token"));
+  const token = req.body.token;
+  console.log(token);
+  if (!token || !isTokenValid(token)) {
+    res.json("Token không hợp lệ");
+  } else {
+    var decoded = jwt.verify(req.body.token, "nhut");
+    accountmodel
+      .findById(decoded.userId)
+      .then((data) => {
+        if (data) {
+          res.data = data;
+          next();
+        } else {
+          res.json("vui lòng đăng nhập");
+        }
+      })
+      .catch((err) => console.log("lỗi xác thực token"));
+  }
 };
 
 //return product
