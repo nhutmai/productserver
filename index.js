@@ -8,7 +8,11 @@ var jwt = require("jsonwebtoken");
 const app = express();
 const port = process.env.port || 8080;
 app.use(express.json({ extended: false }));
-app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+});
 
 //midleway bodyparser
 app.use(bodyParser.urlencoded({ extended: false }));
